@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<nodes>
+	<node name="Wroclaw">
+		<con to="Warszawa">430</con>
+		<con to="Krakow">250</con>
+		<con to="Poznan">210</con>
+	</node>
+
+	<node name="Krakow">
+		<con to="Poznan">500</con>
+	</node>
+
+	<node name="Warszawa">
+		<con to="Gdansk">300</con>
+	</node>	
+
+	<node name="Gdansk">
+	</node>	
+</nodes>
