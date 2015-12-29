@@ -5,9 +5,13 @@ public class Main {
 	public static void main(String[] args) {
 		System.out.println("Hello ants!");
 		try {
-			new Graph("D:\\JavaProjects\\PO_Ants\\tests\\test1.txt");
-		} catch (DocumentException e) {
-			// TODO Auto-generated catch block
+			new Graph("tests\\test1.txt");
+		} catch (DocumentException e) 
+		{
+			e.printStackTrace();
+		} catch (GraphBuildException e) 
+		{
+			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
 

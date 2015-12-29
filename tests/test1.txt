@@ -16,4 +16,10 @@
 
 	<node name="Gdansk">
 	</node>	
+
+	<node name="Poznan">
+	</node>	
+
+	<node name="Gdynia">
+	</node>
 </nodes>

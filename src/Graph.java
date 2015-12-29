@@ -14,18 +14,22 @@ public class Graph {
 	private Map<String, GraphNode> nodes = new HashMap<>();
 	private List<Path> paths = new ArrayList<>();
 	
-	public Graph(String filename) throws DocumentException
+	public Graph(String filename) throws DocumentException, GraphBuildException
 	{
 		 File inputFile = new File(filename);
          SAXReader reader = new SAXReader();
          Document document = reader.read( inputFile );
 
 		List<Node> xlmNodes = document.selectNodes("/nodes/node" );
+		//load empty nodes
          for(Node xmlNode : xlmNodes)
          {
         	 String nodeName = xmlNode.valueOf("@name");
-        	 nodes.put(nodeName, new GraphNode());
+        	 if(nodes.containsKey(nodeName))
+        		 throw new GraphBuildException(String.format("Redefine node %s", nodeName));
+        	 nodes.put(nodeName, new GraphNode(nodeName));
          }
+         //load path 
          for(Node xmlNode : xlmNodes)
          {
         	 String nodeName = xmlNode.valueOf("@name");
@@ -34,14 +38,33 @@ public class Graph {
         	 for(Node pathNode : xlmsubNodes)
         	 {
         		 GraphNode node2 = nodes.get(pathNode.valueOf("@to"));
-        		 Path newPath = new Path(node1, node2, new Integer(pathNode.getText()));
+        		 if(node2 == null)
+        			 throw new GraphBuildException(String.format(
+        					 "node %s is not defined", pathNode.valueOf("@to")));
+        		 if(!addPath(node1, node2, new Integer(pathNode.getText())))
+        			 throw new GraphBuildException(String.format("redefine path: %s - %s",
+        					 node1.getName(), node2.getName()));
         	 }
-        	 System.out.println(String.format("new node addes: %s - %d new connectins", 
+        	 System.out.println(String.format("new node added: %s - %d new connectins", 
         			 nodeName, xlmsubNodes.size()));
          }
          
-
-
+         //just warnings
+         for(GraphNode graphNode : nodes.values())
+        	 if(graphNode.getNodes().size() == 0)
+        		 System.out.println(String.format("WARN: node %s has no paths", graphNode.getName()));
+	}
+	
+	public boolean addPath(GraphNode node1, GraphNode node2, int distance)
+	{
+		Path path = new Path(distance);
+		
+		if(!node1.addPath(path, node2.getName()))
+			return false;
+		
+		node2.addPath(path,  node1.getName());	
+		paths.add(path);
+		return true;
 	}
 
 }
