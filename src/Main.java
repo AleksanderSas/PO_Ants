@@ -5,7 +5,8 @@ public class Main {
 	public static void main(String[] args) {
 		System.out.println("Hello ants!");
 		try {
-			new Graph("tests\\test1.txt");
+			Graph graph = new Graph("tests\\test1.txt");
+			System.out.println(graph.printDistnce());
 		} catch (DocumentException e) 
 		{
 			e.printStackTrace();
