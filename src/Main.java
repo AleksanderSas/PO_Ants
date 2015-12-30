@@ -7,6 +7,10 @@ public class Main {
 		try {
 			Graph graph = new Graph("tests\\test1.txt");
 			System.out.println(graph.printDistnce());
+			System.out.println("");
+			
+			Anthill anthill = new Anthill(3, graph);
+			anthill.findPath(10);
 		} catch (DocumentException e) 
 		{
 			e.printStackTrace();

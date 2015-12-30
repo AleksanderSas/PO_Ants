@@ -9,12 +9,13 @@ public class Ant {
 	private List<GraphNode> visitedNodes = new ArrayList<>();
 	private GraphNode currentNode = null;
 	private GraphNode startNode;
+	public boolean complete = false;
+	private int totalDistance;
 	
 	public Ant(GraphNode startNode)
 	{
-		currentNode = startNode;
 		this.startNode = startNode;
-		visitedNodes.add(startNode);
+		reset();
 	}
 	
 	/*
@@ -29,23 +30,52 @@ public class Ant {
 		while(nodeNumber > 0)
 		{
 			Collection<Path> paths = currentNode.getNodes(nodeNumber, visitedNodes);
-			if(paths == null)
-				return false;
+			if(paths.size() == 0)
+				if(nodeNumber == 1)
+					break;
+				else
+					return false;
 			Path nextPath = Path.randPath(paths);
 			road.add(nextPath);
 			visitedNodes.add(nextPath.getNodeFrom(currentNode));
 			currentNode = nextPath.getNodeFrom(currentNode);
 			nodeNumber--;
 		}
-		road.add(currentNode.getPath2Node(startNode));
+		Path lastPath = currentNode.getPath2Node(startNode);
+		if(lastPath == null)
+			return false;
+		road.add(lastPath);
+		complete = true;
 		return true;
+	}
+	
+	public void spreadPheromone(float pheromoneSpreadFactor)
+	{
+		if(! complete)
+			return;
+		float pheromone = 0;
+		totalDistance = 0;
+		
+		for(Path p : road)
+			totalDistance += p.getDistance();
+		pheromone = pheromoneSpreadFactor / totalDistance;
+		
+		for(Path p : road)
+			p.addPheromone(pheromone);
 	}
 	
 	public void reset()
 	{
 		currentNode = startNode;
 		visitedNodes.clear();
-		road.clear(); 
+		road.clear();
 		visitedNodes.add(startNode);
+		complete = false;
+		totalDistance = Integer.MAX_VALUE;
+	}
+	
+	public int getDistance()
+	{
+		return totalDistance;
 	}
 }

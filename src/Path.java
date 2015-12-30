@@ -32,7 +32,6 @@ public class Path {
 			pheromoneSum += p.pheromone * FactorCentre.pheromoneFactor + 1.0;
 		
 		float random = generator.nextFloat();
-		System.out.println(random);
 		random *= pheromoneSum;
 		
 		pheromoneSum = 0;
@@ -46,5 +45,20 @@ public class Path {
 		}
 		
 		throw new InternalException(String.format("path tossing, rand %f, max %f", random, pheromoneSum));
+	}
+	
+	public int getDistance()
+	{
+		return distance;
+	}
+	
+	public void addPheromone(float pheromone)
+	{
+		this.pheromone += pheromone;
+	}
+	
+	public void veporization()
+	{
+		pheromone *= FactorCentre.veporizationFactor;
 	}
 }

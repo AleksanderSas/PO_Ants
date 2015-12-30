@@ -1,5 +1,6 @@
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -120,6 +121,21 @@ public class Graph {
 		for(GraphNode node : nodes.values())
 			sb.append(node.getName()).append(" - ").append(node.minDistance).append("\n");
 		return sb.toString();
+	}
+	
+	public GraphNode getStartNode()
+	{
+		return startNode;
+	}
+	
+	public Collection<Path> getPaths()
+	{
+		return paths;
+	}
+	
+	public int getNodeNumber()
+	{
+		return nodes.size();
 	}
 
 }
