@@ -57,6 +57,11 @@ public class Path {
 		this.pheromone += pheromone;
 	}
 	
+	public float getPheromon()
+	{
+		return pheromone;
+	}
+	
 	public void veporization()
 	{
 		pheromone *= FactorCentre.veporizationFactor;

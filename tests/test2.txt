@@ -1,21 +1,74 @@
 <?xml version="1.0"?>
-<class>
-   <student rollno="393">
-      <firstname>dinkar</firstname>
-      <lastname>kad</lastname>
-      <nickname>dinkar</nickname>
-      <marks>85</marks>
-   </student>
-   <student rollno="493">
-      <firstname>Vaneet</firstname>
-      <lastname>Gupta</lastname>
-      <nickname>vinni</nickname>
-      <marks>95</marks>
-   </student>
-   <student rollno="593">
-      <firstname>jasvir</firstname>
-      <lastname>singn</lastname>
-      <nickname>jazz</nickname>
-      <marks>90</marks>
-   </student>
-</class>
+<nodes>
+	<node name="Wroclaw">
+		<con to="Warszawa">360</con>
+		<con to="Krakow">270</con>
+		<con to="Poznan">170</con>
+		<con to="Katowice">190</con>
+	</node>
+
+	<node name="Krakow">
+		<con to="Poznan">450</con>
+	</node>
+
+	<node name="Warszawa">
+		<con to="Gdansk">420</con>
+	</node>	
+
+	<node name="Gdansk">
+	</node>	
+
+	<node name="Poznan">
+	</node>	
+
+	<node name="Gdynia">
+		<con to="Gdansk">40</con>
+	</node>
+
+	<node name="Lodz">
+		<con to="Poznan">200</con>
+		<con to="Katowice">190</con>
+		<con to="Warszawa">140</con>
+	</node>
+
+	<node name="Katowice">
+		<con to="Poznan">400</con>
+		<con to="Gdansk">520</con>
+	</node>
+
+	<node name="Brzeg">
+		<con to="Poznan">240</con>
+		<con to="Katowice">160</con>
+		<con to="Wroclaw">40</con>
+	</node>
+
+	<node name="Ostrawa">
+		<con to="Klodzko">170</con>
+		<con to="Katowice">80</con>
+		<con to="Krakow">170</con>
+	</node>
+
+	<node name="Legnica">
+		<con to="Wroclaw">70</con>
+		<con to="Jelenia Gora">80</con>
+		<con to="Poznan">180</con>
+	</node>
+
+	<node name="Jelenia Gora">
+		<con to="Wroclaw">120</con>
+		<con to="Katowice">290</con>
+		<con to="Klodzko">180</con>
+	</node>
+
+	<node name="Klodzko">
+		<con to="Wroclaw">120</con>
+		<con to="Brzeg">90</con>
+		<con to="Legnica">130</con>
+	</node>
+
+	<node name="Czestochowa">
+		<con to="Lodz">120</con>
+		<con to="Katowice">80</con>
+		<con to="Klodzko">180</con>
+	</node>
+</nodes>

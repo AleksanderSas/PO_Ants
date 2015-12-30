@@ -1,10 +1,11 @@
+import java.util.Collection;
 
 public class Anthill {
 	
 	Ant[] ants;
 	Graph graph;
 	int node2VisitNumber;
-	float pheromoneSpreadFactor = (float) 300.0;
+	float pheromoneSpreadFactor; // = (float) 300.0;
 	
 	public Anthill(int antNumber, Graph graph)
 	{
@@ -13,6 +14,8 @@ public class Anthill {
 		ants = new Ant[antNumber];
 		for(int i = 0; i < antNumber; i++)
 			ants[i] = new Ant(graph.getStartNode());
+		
+		pheromoneSpreadFactor = computPheromoneSpreadFactor();
 	}
 	
 	private void executeOneEpoche()
@@ -55,8 +58,36 @@ public class Anthill {
 		for(int i = 0; i < maxEpoche; i++)
 		{
 			executeOneEpoche();
-			System.out.println(String.format("%d iter. : best distance: %d", i, getBestAnt().getDistance()));
+			if(i % 50 == 0)
+				System.out.println(String.format("%d iter. : best distance: %d",
+						i, getBestAnt().getDistance()));
 		}
+	}
+	
+	public String getBestPath()
+	{
+		Ant ant = getBestAnt();		
+		return ant.toString();
+	}
+	
+	public String getAllPaths()
+	{
+		StringBuilder sb = new StringBuilder();
+		
+		for(int i = 0; i < ants.length; i++)
+			sb.append("\n>>   ").append(i).append("   <<\n").append(ants[i].toString());
+		return sb.toString();
+	}
+	
+	public float computPheromoneSpreadFactor()
+	{
+		float factor = (float) 0.0;
+		Collection<Path> paths = graph.getPaths();
+		for(Path p : paths)
+			factor += p.getDistance();
+		factor /= paths.size() / graph.getNodeNumber() * 2;
+		
+		return factor;
 	}
 
 }

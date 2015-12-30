@@ -97,22 +97,23 @@ public class Graph {
         //load path 
         for(Node xmlNode : xlmNodes)
         {
-       	 String nodeName = xmlNode.valueOf("@name");
-       	 GraphNode node1 = nodes.get(nodeName);
-       	 List<Node> xlmsubNodes = xmlNode.selectNodes("./con");
-       	 for(Node pathNode : xlmsubNodes)
-       	 {
-       		 GraphNode node2 = nodes.get(pathNode.valueOf("@to"));
-       		 if(node2 == null)
-       			 throw new GraphBuildException(String.format(
-       					 "node %s is not defined", pathNode.valueOf("@to")));
-       		 if(!addPath(node1, node2, new Integer(pathNode.getText())))
-       			 throw new GraphBuildException(String.format("redefine path: %s - %s",
-       					 node1.getName(), node2.getName()));
-       	 }
-       	 System.out.println(String.format("new node added: %s - %d new connectins", 
-       			 nodeName, xlmsubNodes.size()));
+	       	 String nodeName = xmlNode.valueOf("@name");
+	       	 GraphNode node1 = nodes.get(nodeName);
+	       	 List<Node> xlmsubNodes = xmlNode.selectNodes("./con");
+	       	 for(Node pathNode : xlmsubNodes)
+	       	 {
+	       		 GraphNode node2 = nodes.get(pathNode.valueOf("@to"));
+	       		 if(node2 == null)
+	       			 throw new GraphBuildException(String.format(
+	       					 "node %s is not defined", pathNode.valueOf("@to")));
+	       		 if(!addPath(node1, node2, new Integer(pathNode.getText())))
+	       			 throw new GraphBuildException(String.format("redefine path: %s - %s",
+	       					 node1.getName(), node2.getName()));
+	       	 }
+	       	 System.out.println(String.format("new node added: %s - %d new connectins", 
+	       			 nodeName, xlmsubNodes.size()));
         }
+        System.out.println(String.format("Loaded %d nodes", nodes.size()));
 	}
 	
 	public String printDistnce()

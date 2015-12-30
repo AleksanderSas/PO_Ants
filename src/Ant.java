@@ -27,13 +27,14 @@ public class Ant {
 	 */
 	public boolean walk(int nodeNumber) throws InternalException
 	{
-		while(nodeNumber > 0)
+		//start node is already added
+		while(nodeNumber > 1)
 		{
 			Collection<Path> paths = currentNode.getNodes(nodeNumber, visitedNodes);
 			if(paths.size() == 0)
-				if(nodeNumber == 1)
-					break;
-				else
+				//if(nodeNumber == 1)
+					//break;
+				//else
 					return false;
 			Path nextPath = Path.randPath(paths);
 			road.add(nextPath);
@@ -77,5 +78,22 @@ public class Ant {
 	public int getDistance()
 	{
 		return totalDistance;
+	}
+	
+	public String toString()
+	{
+		StringBuilder sb = new StringBuilder();
+		if(!complete)
+		{
+			return "ant terminated";
+		}
+		int i = 0;
+		for(GraphNode n : visitedNodes)
+		{
+			sb.append(n.getName()).append(" \tpher.: ").append(road.get(i).getPheromon()).append(" -> \n");
+			i++;
+		}
+		sb.append("total distance: ").append(totalDistance);
+		return sb.toString();
 	}
 }
