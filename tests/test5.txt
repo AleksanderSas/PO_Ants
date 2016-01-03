@@ -1,9 +1,11 @@
 <?xml version="1.0"?>
 
 <!--
+
 Najlepsza sciezka to:	v_1_1, v_1_2, ..., v_1_n	a jej dlugosc to n
 	
-Graf ma struktur drabiny z bajpasami do korzenia (wierzcholek v_1_1):
+Graf ma struktur drabiny z bajpasami do korzenia (wierzcholek v_1_1)
+To jets to samo co test4 ale jest dluzsze
 	
  (v_1_1)-1-*-1-*-...-1-* -> 1 -> v_1_1
 	|    |   |       |
@@ -43,6 +45,15 @@ Graf ma struktur drabiny z bajpasami do korzenia (wierzcholek v_1_1):
 		<con to="v_2_21">5</con>
 		<con to="v_2_22">5</con>
 		<con to="v_2_23">5</con>
+		<con to="v_2_24">5</con>
+		<con to="v_2_25">5</con>
+		<con to="v_2_26">5</con>
+		<con to="v_2_27">5</con>
+		<con to="v_2_28">5</con>
+		<con to="v_2_29">5</con>
+		<con to="v_2_30">5</con>
+		<con to="v_2_31">5</con>
+		<con to="v_2_32">5</con>
 		
 	</node>
 
@@ -152,8 +163,53 @@ Graf ma struktur drabiny z bajpasami do korzenia (wierzcholek v_1_1):
 	</node>
 	
 	<node name="v_1_23">
-		<con to="v_1_1">1</con>
+		<con to="v_1_24">1</con>
 		<con to="v_2_23">2</con>
+	</node>
+	
+	<node name="v_1_24">
+		<con to="v_1_25">1</con>
+		<con to="v_2_24">2</con>
+	</node>
+	
+	<node name="v_1_25">
+		<con to="v_1_26">1</con>
+		<con to="v_2_25">2</con>
+	</node>
+	
+	<node name="v_1_26">
+		<con to="v_1_27">1</con>
+		<con to="v_2_26">1</con>
+	</node>
+	
+	<node name="v_1_27">
+		<con to="v_1_28">1</con>
+		<con to="v_2_27">2</con>
+	</node>
+	
+	<node name="v_1_28">
+		<con to="v_1_29">1</con>
+		<con to="v_2_28">2</con>
+	</node>
+	
+	<node name="v_1_29">
+		<con to="v_1_30">1</con>
+		<con to="v_2_29">1</con>
+	</node>
+	
+	<node name="v_1_30">
+		<con to="v_1_31">1</con>
+		<con to="v_2_30">2</con>
+	</node>
+	
+	<node name="v_1_31">
+		<con to="v_1_32">1</con>
+		<con to="v_2_31">2</con>
+	</node>
+	
+	<node name="v_1_32">
+		<con to="v_1_1">1</con>
+		<con to="v_2_32">2</con>
 	</node>
 	
 	<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -249,5 +305,41 @@ Graf ma struktur drabiny z bajpasami do korzenia (wierzcholek v_1_1):
 	</node>
 	
 	<node name="v_2_23">
+		<con to="v_2_24">2</con>
+	</node>
+	
+	<node name="v_2_24">
+		<con to="v_2_25">2</con>
+	</node>
+	
+	<node name="v_2_25">
+		<con to="v_2_26">2</con>
+	</node>
+	
+	<node name="v_2_26">
+		<con to="v_2_27">2</con>
+	</node>
+	
+	<node name="v_2_27">
+		<con to="v_2_28">2</con>
+	</node>
+	
+	<node name="v_2_28">
+		<con to="v_2_29">2</con>
+	</node>
+	
+	<node name="v_2_29">
+		<con to="v_2_30">2</con>
+	</node>
+	
+	<node name="v_2_30">
+		<con to="v_2_31">2</con>
+	</node>
+	
+	<node name="v_2_31">
+		<con to="v_2_32">2</con>
+	</node>
+	
+	<node name="v_2_32">
 	</node>
 </nodes>
