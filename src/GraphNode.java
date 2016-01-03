@@ -1,5 +1,6 @@
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -43,7 +44,7 @@ public class GraphNode {
 				collect(Collectors.toList());
 	}
 	
-	public Collection<Path> getNodes(int maxDistance, Collection<GraphNode> visitedNodes)
+	public List<Path> getNodes(int maxDistance, Collection<GraphNode> visitedNodes)
 	{
 		return paths.values().stream().filter(p -> p.getNodeFrom(this).minDistance <= maxDistance 
 				&& !visitedNodes.contains(p.getNodeFrom(this))).collect(Collectors.toList());
@@ -52,5 +53,17 @@ public class GraphNode {
 	public Path getPath2Node(GraphNode node)
 	{
 		return paths.get(node.getName());
+	}
+	
+	public String toString()
+	{
+		StringBuilder sb = new StringBuilder();
+		
+		for(Path p : paths.values())
+		{
+			sb.append(p.getNodeFrom(this).getName()).append("\t : ").append(p.getPheromon()).
+			append("\t dts: ").append(p.getDistance()).append("\n");
+		}
+		return sb.toString();
 	}
 }

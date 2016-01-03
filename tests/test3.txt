@@ -115,4 +115,13 @@
 		<con to="Warszawa">100</con>
 		<con to="Bialystok">100</con>
 	</node>
+	
+	<node name="Kutno">
+		<con to="Warszawa">150</con>
+		<con to="Lodz">60</con>
+		<con to="Bydgoszcz">150</con>
+		<con to="Poznan">190</con>
+		<con to="Gdynia">290</con>
+		<con to="Wroclaw">240</con>
+	</node>
 </nodes>

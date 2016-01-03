@@ -1,0 +1,182 @@
+<?xml version="1.0"?>
+
+<!--
+Najlepsza sciezka to:	v_1_1, v_1_2, ..., v_1_n	a jej dlugosc to n
+	
+Graf ma struktur drabiny z bajpasami do korzenia (wierzcholek v_1_1):
+	
+ (v_1_1)-1-*-1-*-...-1-* -> 1 -> v_1_1
+	|    |   |       |
+	2    1   2       2
+	|    |   |       |
+	*-2 -*-2-*-...-2-*
+	|    |   |       |    
+	5    5   5       5
+	|    |   |       |
+	       v_1_1
+-->
+
+<nodes>
+	<node name="v_1_1">
+		<con to="v_1_2">1</con>
+		<con to="v_2_1">2</con>
+		
+		<con to="v_2_2">5</con>
+		<con to="v_2_3">5</con>
+		<con to="v_2_4">5</con>
+		<con to="v_2_5">5</con>
+		<con to="v_2_6">5</con>
+		<con to="v_2_7">5</con>
+		<con to="v_2_8">5</con>
+		<con to="v_2_9">5</con>
+		<con to="v_2_10">5</con>
+		<con to="v_2_11">5</con>
+		<con to="v_2_12">5</con>
+		<con to="v_2_13">5</con>
+		<con to="v_2_14">5</con>
+		<con to="v_2_15">5</con>
+		<con to="v_2_16">5</con>
+		
+	</node>
+
+	<node name="v_1_2">
+		<con to="v_1_3">1</con>
+		<con to="v_2_2">1</con>
+	</node>
+	
+	<node name="v_1_3">
+		<con to="v_1_4">1</con>
+		<con to="v_2_3">2</con>
+	</node>
+	
+	<node name="v_1_4">
+		<con to="v_1_5">1</con>
+		<con to="v_2_4">1</con>
+	</node>
+	
+	<node name="v_1_5">
+		<con to="v_1_6">1</con>
+		<con to="v_2_5">2</con>
+	</node>
+	
+	<node name="v_1_6">
+		<con to="v_1_7">1</con>
+		<con to="v_2_6">1</con>
+	</node>
+	
+	<node name="v_1_7">
+		<con to="v_1_8">1</con>
+		<con to="v_2_7">1</con>
+	</node>
+	
+	<node name="v_1_8">
+		<con to="v_1_9">1</con>
+		<con to="v_2_8">2</con>
+	</node>
+	
+	<node name="v_1_9">
+		<con to="v_1_10">1</con>
+		<con to="v_2_9">1</con>
+	</node>
+	
+	<node name="v_1_10">
+		<con to="v_1_11">1</con>
+		<con to="v_2_10">1</con>
+	</node>
+	
+	<node name="v_1_11">
+		<con to="v_1_12">1</con>
+		<con to="v_2_11">2</con>
+	</node>
+	
+	<node name="v_1_12">
+		<con to="v_1_13">1</con>
+		<con to="v_2_12">1</con>
+	</node>
+	
+	<node name="v_1_13">
+		<con to="v_1_14">1</con>
+		<con to="v_2_13">1</con>
+	</node>
+	
+	<node name="v_1_14">
+		<con to="v_1_15">1</con>
+		<con to="v_2_14">2</con>
+	</node>
+	
+	<node name="v_1_15">
+		<con to="v_1_16">1</con>
+		<con to="v_2_15">2</con>
+	</node>
+	
+		<node name="v_1_16">
+		<con to="v_1_1">1</con>
+		<con to="v_2_16">2</con>
+	</node>
+	
+	<!--	Druga Linia	-->
+	
+	<node name="v_2_1">
+		<con to="v_2_2">2</con>
+	</node>
+
+	<node name="v_2_2">
+		<con to="v_2_3">2</con>
+	</node>
+	
+	<node name="v_2_3">
+		<con to="v_2_4">2</con>
+	</node>
+	
+	<node name="v_2_4">
+		<con to="v_2_5">2</con>
+	</node>
+	
+	<node name="v_2_5">
+		<con to="v_2_6">2</con>
+	</node>
+	
+	<node name="v_2_6">
+		<con to="v_2_7">2</con>
+	</node>
+	
+	<node name="v_2_7">
+		<con to="v_2_8">2</con>
+	</node>
+	
+	<node name="v_2_8">
+		<con to="v_2_9">2</con>
+	</node>
+	
+	<node name="v_2_9">
+		<con to="v_2_10">2</con>
+	</node>
+	
+	<node name="v_2_10">
+		<con to="v_2_11">2</con>
+	</node>
+	
+	<node name="v_2_11">
+		<con to="v_2_12">2</con>
+	</node>
+	
+	<node name="v_2_12">
+		<con to="v_2_13">2</con>
+	</node>
+	
+	<node name="v_2_13">
+		<con to="v_2_14">2</con>
+	</node>
+	
+	<node name="v_2_14">
+		<con to="v_2_15">2</con>
+	</node>
+	
+	<node name="v_2_15">
+		<con to="v_2_16">2</con>
+	</node>
+	
+	<node name="v_2_16">
+	</node>
+
+</nodes>

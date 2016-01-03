@@ -110,10 +110,16 @@ public class Graph {
 	       			 throw new GraphBuildException(String.format("redefine path: %s - %s",
 	       					 node1.getName(), node2.getName()));
 	       	 }
-	       	 System.out.println(String.format("new node added: %s - %d new connectins", 
-	       			 nodeName, xlmsubNodes.size()));
+	       	 //System.out.println(String.format("new node added: %s - %d connectins", 
+	       			 //nodeName, xlmsubNodes.size()));
         }
+        
+        for(GraphNode n : nodes.values())
+        	System.out.println(String.format("new node added: %s - %d connectins", 
+	       			 n.getName(), n.getNodes().size()));
         System.out.println(String.format("Loaded %d nodes", nodes.size()));
+        System.out.println(String.format("Loaded %d paths", paths.size()));
+        System.out.println(String.format("Branching factor %f", 2.0 * paths.size() / nodes.size()));
 	}
 	
 	public String printDistnce()
