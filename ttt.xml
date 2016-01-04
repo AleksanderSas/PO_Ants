@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<nodes>
+  <node name="v_1_1">
+    <con to="v_2_1">2</con>
+    <con to="v_1_2">1</con>
+    <con to="v_2_4">5</con>
+    <con to="v_2_2">5</con>
+    <con to="v_2_3">5</con>
+    <con to="v_1_4">1</con>
+  </node>
+  <node name="v_2_1">
+    <con to="v_2_2">2</con>
+  </node>
+  <node name="v_1_2">
+    <con to="v_2_2">1</con>
+    <con to="v_1_3">1</con>
+  </node>
+  <node name="v_2_4">
+    <con to="v_1_4">1</con>
+    <con to="v_2_3">2</con>
+  </node>
+  <node name="v_2_2">
+    <con to="v_2_3">2</con>
+  </node>
+  <node name="v_1_3">
+    <con to="v_2_3">2</con>
+    <con to="v_1_4">1</con>
+  </node>
+  <node name="v_2_3"/>
+  <node name="v_1_4"/>
+</nodes>

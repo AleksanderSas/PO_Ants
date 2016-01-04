@@ -2,15 +2,12 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 import java.util.Set;
 
 import org.dom4j.Document;
@@ -37,6 +34,12 @@ public class Graph {
          for(GraphNode graphNode : nodes.values())
         	 if(graphNode.getNodes().size() == 0)
         		 System.out.println(String.format("WARN: node %s has no paths", graphNode.getName()));
+	}
+	
+	public Graph(int n)
+	{
+		buildGrapf_lader(n);
+		computMinDistance();
 	}
 	
 	public boolean addPath(GraphNode node1, GraphNode node2, int distance)
@@ -165,6 +168,51 @@ public class Graph {
 				.addText("" + p.getDistance());
 			}
 		}
+	}
+	
+	/*	The function build structure line below:
+	 * 
+	 * 	(v_1_1)-1-*-1-*-...-1-* -> 1 -> v_1_1
+	 *		 |    |   |       |
+	 *		 2    1   2       2
+	 *		 |    |   |       |
+	 * 		 *-2 -*-2-*-...-2-*
+	 *		 |    |   |       |    
+	 *		 5    5   5       5
+	 *		 |    |   |       |
+	 *     	 		v_1_1
+	 *  
+	 */
+	//TODO refactor, remove to other class
+	public void buildGrapf_lader(int size)
+	{
+		GraphNode previousNode_line1 = new GraphNode("v_1_1");
+		GraphNode previousNode_line2 = new GraphNode("v_2_1");
+		GraphNode currentNode_line1 = null;
+		GraphNode currentNode_line2 = null;
+		
+		startNode = previousNode_line1;
+		nodes.put("v_1_1", previousNode_line1);
+		nodes.put("v_2_1", previousNode_line2);
+		addPath( previousNode_line1, previousNode_line2, 2);
+		
+		for(int i = 2; i <= size; i++)
+		{
+			currentNode_line1 = new GraphNode("v_1_" + i);
+			currentNode_line2 = new GraphNode("v_2_" + i);
+			nodes.put("v_1_"  + i, currentNode_line1);
+			nodes.put("v_2_"  + i, currentNode_line2);
+			
+			addPath(currentNode_line1, currentNode_line2, (i%2 == 0)? 1 : 2);
+			addPath(currentNode_line1, previousNode_line1, 1);
+			addPath(currentNode_line2, previousNode_line2, 2);
+			addPath(currentNode_line2, startNode, 5);
+			
+			previousNode_line1 = currentNode_line1;
+			previousNode_line2 = currentNode_line2;
+		}
+		
+		addPath( previousNode_line1, startNode, 1);
 	}
 	
 	public String printDistnce()
