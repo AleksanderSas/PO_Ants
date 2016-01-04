@@ -38,6 +38,11 @@ public class GraphNode {
 		return paths.values().stream().map(p -> p.getNodeFrom(this)).collect(Collectors.toList());
 	}
 	
+	public Collection<Path>  getAllNodes()
+	{
+		return paths.values();
+	}
+	
 	public Collection<Path>  getNodes(int maxDistance)
 	{
 		return paths.values().stream().filter(p -> p.getNodeFrom(this).minDistance <= maxDistance).

@@ -1,14 +1,25 @@
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
+import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
+import org.dom4j.io.XMLWriter;
 import org.dom4j.Node;
 
 public class Graph {
@@ -42,7 +53,7 @@ public class Graph {
 	
 	/*
 	 * 	The function computes minimal distance from
-	 *  node to the start node
+	 *  node to the start node, this is BFS indeed
 	 */
 	private void computMinDistance()
 	{
@@ -110,8 +121,6 @@ public class Graph {
 	       			 throw new GraphBuildException(String.format("redefine path: %s - %s",
 	       					 node1.getName(), node2.getName()));
 	       	 }
-	       	 //System.out.println(String.format("new node added: %s - %d connectins", 
-	       			 //nodeName, xlmsubNodes.size()));
         }
         
         for(GraphNode n : nodes.values())
@@ -120,6 +129,42 @@ public class Graph {
         System.out.println(String.format("Loaded %d nodes", nodes.size()));
         System.out.println(String.format("Loaded %d paths", paths.size()));
         System.out.println(String.format("Branching factor %f", 2.0 * paths.size() / nodes.size()));
+	}
+	
+	public void saveGraph2XML(String filename) throws IOException
+	{
+		Document doc = DocumentHelper.createDocument();
+		Set<Path> addedPaths = new HashSet<>();
+		
+		Element nodes =  doc.addElement("nodes");
+		addNode(nodes, startNode, addedPaths);
+		for(GraphNode n : this.nodes.values())
+		{
+			if(n != startNode)
+				addNode(nodes, n, addedPaths);
+		}
+		
+		
+		OutputFormat format = OutputFormat.createPrettyPrint();
+        XMLWriter writer;
+        BufferedWriter bw = new BufferedWriter(new FileWriter(filename));
+        writer = new XMLWriter(bw, format );
+        writer.write( doc );
+        bw.close();
+	}
+	
+	private void addNode(Element root, GraphNode node, Set<Path> addedPaths)
+	{
+		Element XMLnode =  root.addElement("node").addAttribute("name", node.getName());
+		for(Path p : node.getAllNodes())
+		{
+			if(!addedPaths.contains(p))
+			{
+				addedPaths.add(p);
+				XMLnode.addElement("con").addAttribute("to", p.getNodeFrom(node).getName())
+				.addText("" + p.getDistance());
+			}
+		}
 	}
 	
 	public String printDistnce()
