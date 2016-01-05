@@ -10,6 +10,7 @@ public class Path {
 	private GraphNode node2;
 	private int distance;
 	private float pheromone;
+	private float factorizedDistance;
 	
 	public Path(int distance, GraphNode node1,GraphNode node2) 
 	{
@@ -18,6 +19,8 @@ public class Path {
 		this.node2 = node2;
 		this.distance = distance;
 		pheromone = (float) 1.0;
+		factorizedDistance = (float) Math.pow(distance, FactorCentre.DistanceExpFactor);
+		factorizedDistance = 1;
 	}
 	
 	public GraphNode getNodeFrom(GraphNode source)
@@ -36,7 +39,7 @@ public class Path {
 		float total = 0;
 		for(Path p : paths)
 			//pheromoneSum += p.pheromone * FactorCentre.pheromoneFactor + 1.0 + epocheFactor + 3000.0 / p.getDistance();
-			pheromoneSum += p.pheromone / p.getDistance();
+			pheromoneSum += 1.0 * p.pheromone / p.factorizedDistance + epocheFactor;//p.getDistance();
 			//pheromoneSum = (float) (1.0 / p.getDistance());
 		
 		total = pheromoneSum;
@@ -47,7 +50,7 @@ public class Path {
 		for(Path p : paths)
 		{
 			//pheromonTmp = (float) (p.pheromone * FactorCentre.pheromoneFactor + 1.0 + epocheFactor + 3000.0 / p.getDistance());
-			pheromonTmp = p.pheromone / p.getDistance();
+			pheromonTmp = p.pheromone / p.factorizedDistance + epocheFactor;
 			//pheromonTmp = (float) (1.0 / p.getDistance());
 			if(pheromoneSum + pheromonTmp >= random)
 				return new Pair<Path, Float>(p, pheromonTmp / total);
@@ -56,6 +59,19 @@ public class Path {
 		}
 		
 		throw new InternalException(String.format("path tossing, rand %f, max %f", random, pheromoneSum));
+	}
+	
+	public static Pair<Path, Float> getBestPath(List<Path> paths) throws InternalException
+	{
+		Path best = paths.get(0);
+		float sum = 0;
+		for(Path p : paths)
+		{
+			sum += p.pheromone / p.factorizedDistance;
+			if(p.pheromone / p.factorizedDistance > best.pheromone / best.factorizedDistance)
+				best = p;
+		}
+		return new Pair<Path, Float>(best, best.pheromone / sum / best.factorizedDistance);
 	}
 	
 	public int getDistance()
@@ -75,6 +91,7 @@ public class Path {
 	
 	public void veporization()
 	{
-		pheromone *= FactorCentre.veporizationFactor;
+		pheromone = (pheromone-1) * FactorCentre.veporizationFactor + 1;
+		//pheromone *= FactorCentre.veporizationFactor;
 	}
 }

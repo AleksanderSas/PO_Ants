@@ -44,25 +44,34 @@ public class Anthill {
 			p.veporization();
 		}
 		ants = ants.stream().sorted((a1, a2 ) -> a1.compareTo(a2)).collect(Collectors.toList());
-		int mean = ants.get(ants.size()-1).getDistance();
-		for(Ant a : ants.subList(0, ants.size()/2))
+		int range = 0;
+		while(range < ants.size() && ants.get(range).complete)
+			range++;
+		range /= 4;
+			
+		//int mean = ants.get(ants.size()-1).getDistance();
+		int mean = 1;
+		for(Ant a : ants.subList(0, range))
+		//for(Ant a : ants)
 		{
 			a.spreadPheromone(pheromoneSpreadFactor, mean);
 		}
 		
 	}
 	
-	private Ant getBestAnt()
+	private Ant getBestAnt() throws InternalException
 	{
 		Ant ant = ants.get(0);
+		ant.reset();
+		ants.get(0).walkBestPath(node2VisitNumber);
 		
-		for(int i = 0; i < ants.size(); i++)
+		/*for(int i = 0; i < ants.size(); i++)
 			if(ant.getDistance() > ants.get(i).getDistance() && ants.get(i).complete)
-				ant = ants.get(i);
+				ant = ants.get(i);*/
 		return ant;
 	}
 	
-	public void findPath(int maxEpoche)
+	public void findPath(int maxEpoche) throws InternalException
 	{
 		for(int i = 0; i < maxEpoche; i++)
 		{
@@ -73,7 +82,7 @@ public class Anthill {
 		}
 	}
 	
-	public String getBestPath()
+	public String getBestPath() throws InternalException
 	{
 		Ant ant = getBestAnt();		
 		return ant.toString();

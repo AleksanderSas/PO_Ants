@@ -38,7 +38,8 @@ public class Graph {
 	
 	public Graph(int n)
 	{
-		buildGrapf_lader(n);
+		//buildGrapf_lader(n, 1, 2, 2, 5);
+		buildGrapf_lader(n, 4, 3, 16, 16);
 		computMinDistance();
 	}
 	
@@ -172,19 +173,19 @@ public class Graph {
 	
 	/*	The function build structure line below:
 	 * 
-	 * 	(v_1_1)-1-*-1-*-...-1-* -> 1 -> v_1_1
-	 *		 |    |   |       |
-	 *		 2    1   2       2
-	 *		 |    |   |       |
-	 * 		 *-2 -*-2-*-...-2-*
-	 *		 |    |   |       |    
-	 *		 5    5   5       5
-	 *		 |    |   |       |
+	 * 	(v_1_1)-w1-*-w1-*-...-w1-* -> w1 -> v_1_1
+	 *		  |    |   |       |
+	 *		 w2   w2   w2      w2
+	 *		  |    |   |       |
+	 * 		  *-w3-*-w3-*-...-w3-*
+	 *		  |    |   |       |    
+	 *		  w4  w4  w4      w4
+	 *		  |    |   |       |
 	 *     	 		v_1_1
 	 *  
 	 */
 	//TODO refactor, remove to other class
-	public void buildGrapf_lader(int size)
+	public void buildGrapf_lader(int size, int w1, int w2, int w3, int w4)
 	{
 		GraphNode previousNode_line1 = new GraphNode("v_1_1");
 		GraphNode previousNode_line2 = new GraphNode("v_2_1");
@@ -194,7 +195,7 @@ public class Graph {
 		startNode = previousNode_line1;
 		nodes.put("v_1_1", previousNode_line1);
 		nodes.put("v_2_1", previousNode_line2);
-		addPath( previousNode_line1, previousNode_line2, 2);
+		addPath( previousNode_line1, previousNode_line2, w2);
 		
 		for(int i = 2; i <= size; i++)
 		{
@@ -203,16 +204,16 @@ public class Graph {
 			nodes.put("v_1_"  + i, currentNode_line1);
 			nodes.put("v_2_"  + i, currentNode_line2);
 			
-			addPath(currentNode_line1, currentNode_line2, (i%2 == 0)? 1 : 2);
-			addPath(currentNode_line1, previousNode_line1, 1);
-			addPath(currentNode_line2, previousNode_line2, 2);
-			addPath(currentNode_line2, startNode, 5);
+			addPath(currentNode_line1, currentNode_line2, w2);
+			addPath(currentNode_line1, previousNode_line1, w1);
+			addPath(currentNode_line2, previousNode_line2, w3);
+			addPath(currentNode_line2, startNode, w4);
 			
 			previousNode_line1 = currentNode_line1;
 			previousNode_line2 = currentNode_line2;
 		}
 		
-		addPath( previousNode_line1, startNode, 1);
+		addPath( previousNode_line1, startNode, w1);
 	}
 	
 	public String printDistnce()

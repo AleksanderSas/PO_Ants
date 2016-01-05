@@ -59,6 +59,34 @@ public class Ant implements Comparable<Ant>{
 		return true;
 	}
 	
+	public boolean walkBestPath(int nodeNumber) throws InternalException
+	{
+		//start node is already added
+		totalDistance = 0;
+		while(nodeNumber > 1)
+		{
+			List<Path> paths = currentNode.getNodes(nodeNumber, visitedNodes);
+			if(paths.size() == 0)
+					return false;
+			Pair<Path, Float> pair = Path.getBestPath(paths);
+			Path nextPath = pair.getKey();
+			road.add(nextPath);
+			visitedNodes.add(nextPath.getNodeFrom(currentNode));
+			currentNode = nextPath.getNodeFrom(currentNode);
+			ppb.add(pair.getValue());
+			nodeNumber--;
+			totalDistance += nextPath.getDistance();
+		}
+		Path lastPath = currentNode.getPath2Node(startNode);
+		if(lastPath == null)
+			return false;
+		totalDistance += lastPath.getDistance();
+		road.add(lastPath);
+		ppb.add((float) -1.0);
+		complete = true;
+		return true;
+	}
+	
 	public void spreadPheromone(float pheromoneSpreadFactor, int mean)
 	{
 		if(! complete)
@@ -68,7 +96,7 @@ public class Ant implements Comparable<Ant>{
 		
 		//for(Path p : road)
 			//totalDistance += p.getDistance();
-		pheromone = pheromoneSpreadFactor / totalDistance; // * (mean - totalDistance);
+		pheromone = (float) Math.pow(pheromoneSpreadFactor / totalDistance, FactorCentre.pheromoneExpFactor); // * (mean - totalDistance);
 		
 		for(Path p : road)
 			p.addPheromone(pheromone);
@@ -79,6 +107,7 @@ public class Ant implements Comparable<Ant>{
 		currentNode = startNode;
 		visitedNodes.clear();
 		road.clear();
+		ppb.clear();
 		visitedNodes.add(startNode);
 		complete = false;
 		totalDistance = Integer.MAX_VALUE;
