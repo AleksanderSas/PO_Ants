@@ -12,8 +12,8 @@ public class Main {
 		//System.out.println(graph.printDistnce());
 		System.out.println("");
 		
-		Anthill anthill = new Anthill(280, graph);
-		anthill.findPath(1200);
+		Anthill anthill = new Anthill(FactorCentre.antNumber, graph);
+		anthill.findPath(FactorCentre.epocheNumber);
 		System.out.println("");
 		System.out.println(anthill.getBestPath());
 		System.out.println(graph.getStartNode().toString());

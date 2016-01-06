@@ -61,7 +61,7 @@ public class Path implements Comparable<Path>{
 		throw new InternalException(String.format("path tossing, rand %f, max %f", random, pheromoneSum));
 	}
 	
-	public static Pair<Path, Float> getBestPath(List<Path> paths) throws InternalException
+	public static Pair<Path, Float> getBestPath(List<Path> paths, int epoche) throws InternalException
 	{
 		Path best = paths.get(0);
 		float sum = 0;
@@ -92,7 +92,6 @@ public class Path implements Comparable<Path>{
 	public void veporization()
 	{
 		pheromone = (pheromone-1) * FactorCentre.veporizationFactor + 1;
-		//pheromone *= FactorCentre.veporizationFactor;
 	}
 
 	@Override

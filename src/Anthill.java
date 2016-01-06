@@ -4,21 +4,21 @@ import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import javafx.util.Pair;
+
 public class Anthill {
 	
 	//Ant[] ants;
 	List<Ant> ants = new ArrayList<>();
 	Graph graph;
 	int node2VisitNumber;
-	float pheromoneSpreadFactor; // = (float) 300.0;
+	float pheromoneSpreadFactor;
 	
 	public Anthill(int antNumber, Graph graph)
 	{
 		node2VisitNumber = graph.getNodeNumber() / 2;
-		this.graph = graph;
-		//ants = new Ant[antNumber];
+		this.graph = graph;;
 		for(int i = 0; i < antNumber; i++)
-			//ants[i] = new Ant(graph.getStartNode());
 			ants.add(new Ant(graph.getStartNode()));
 		
 		pheromoneSpreadFactor = computPheromoneSpreadFactor();
@@ -32,7 +32,7 @@ public class Anthill {
 			a.reset();
 			try 
 			{
-				a.walk(node2VisitNumber, epoche);
+				a.walk(node2VisitNumber, epoche, (p, e) -> Path.randPath(p, e));
 				
 			} catch (InternalException e) 
 			{
@@ -43,13 +43,14 @@ public class Anthill {
 		{
 			p.veporization();
 		}
+		
+		//select subset of best ants 
 		ants = ants.stream().sorted((a1, a2 ) -> a1.compareTo(a2)).collect(Collectors.toList());
 		int range = 0;
 		while(range < ants.size() && ants.get(range).complete)
 			range++;
 		range /= FactorCentre.AntPrunningFactor;
-			
-		//int mean = ants.get(ants.size()-1).getDistance();
+
 		int mean = 1;
 		for(Ant a : ants.subList(0, range))
 		//for(Ant a : ants)
@@ -59,11 +60,12 @@ public class Anthill {
 		
 	}
 	
+	// The method get best path, always best path is selected 
 	private Ant getBestAnt() throws InternalException
 	{
 		Ant ant = ants.get(0);
 		ant.reset();
-		ants.get(0).walkBestPath(node2VisitNumber);
+		ants.get(0).walk(node2VisitNumber, 0, (p, e) -> Path.getBestPath(p, e));
 		
 		/*for(int i = 0; i < ants.size(); i++)
 			if(ant.getDistance() > ants.get(i).getDistance() && ants.get(i).complete)
@@ -105,7 +107,7 @@ public class Anthill {
 			factor += p.getDistance();
 		factor /= paths.size() / graph.getNodeNumber() * 2;
 		
-		return (float) (factor / 4.0);
+		return (float) (factor / FactorCentre.PheromoneSpreadFactor);
 	}
 
 }
