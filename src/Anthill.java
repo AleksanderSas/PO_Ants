@@ -47,7 +47,7 @@ public class Anthill {
 		int range = 0;
 		while(range < ants.size() && ants.get(range).complete)
 			range++;
-		range /= 4;
+		range /= FactorCentre.AntPrunningFactor;
 			
 		//int mean = ants.get(ants.size()-1).getDistance();
 		int mean = 1;
@@ -105,7 +105,7 @@ public class Anthill {
 			factor += p.getDistance();
 		factor /= paths.size() / graph.getNodeNumber() * 2;
 		
-		return factor;
+		return (float) (factor / 4.0);
 	}
 
 }

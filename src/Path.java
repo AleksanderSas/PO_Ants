@@ -4,7 +4,7 @@ import java.util.Random;
 
 import javafx.util.Pair;
 
-public class Path {
+public class Path implements Comparable<Path>{
 	private static Random generator = new Random(System.currentTimeMillis());
 	private GraphNode node1;
 	private GraphNode node2;
@@ -20,7 +20,7 @@ public class Path {
 		this.distance = distance;
 		pheromone = (float) 1.0;
 		factorizedDistance = (float) Math.pow(distance, FactorCentre.DistanceExpFactor);
-		factorizedDistance = 1;
+		//factorizedDistance = 1;
 	}
 	
 	public GraphNode getNodeFrom(GraphNode source)
@@ -93,5 +93,15 @@ public class Path {
 	{
 		pheromone = (pheromone-1) * FactorCentre.veporizationFactor + 1;
 		//pheromone *= FactorCentre.veporizationFactor;
+	}
+
+	@Override
+	public int compareTo(Path o) 
+	{
+		float cmpVal1 = pheromone / factorizedDistance;
+		float cmpVal2 = o.pheromone / o.factorizedDistance;
+		if(cmpVal1 < cmpVal2)
+			return 1;
+		return (cmpVal1 == cmpVal2)? 0 : -1;
 	}
 }

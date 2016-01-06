@@ -63,8 +63,9 @@ public class GraphNode {
 	public String toString()
 	{
 		StringBuilder sb = new StringBuilder();
+		Collection<Path> paths = this.paths.values().stream().sorted((p1, p2) -> p1.compareTo(p2)).collect(Collectors.toList());
 		
-		for(Path p : paths.values())
+		for(Path p : paths)
 		{
 			sb.append(p.getNodeFrom(this).getName()).append("\t : ").append(p.getPheromon()).
 			append("\t dts: ").append(p.getDistance()).append("\n");
