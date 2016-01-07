@@ -39,7 +39,7 @@ public class Graph {
 	public Graph(int n)
 	{
 		//buildGrapf_lader(n, 1, 2, 2, 5);
-		buildGrapf_lader(n, 4, 3, 16, 16);
+		buildGrapf_lader(n, 3, 1, 16, 16);
 		computMinDistance();
 	}
 	

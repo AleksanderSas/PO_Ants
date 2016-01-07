@@ -49,7 +49,10 @@ public class Anthill {
 		int range = 0;
 		while(range < ants.size() && ants.get(range).complete)
 			range++;
-		range /= FactorCentre.AntPrunningFactor;
+		//System.out.println("ok " + range + ",  bad: " + (ants.size() - range));
+		if(range >= FactorCentre.AntPrunningFactor)
+			range /= FactorCentre.AntPrunningFactor;
+			//arnge = FactorCentre.AntPrunningFactor + (range - FactorCentre.AntPrunningFactor) / FactorCentre.AntPrunningFactor;
 
 		int mean = 1;
 		for(Ant a : ants.subList(0, range))
@@ -73,14 +76,27 @@ public class Anthill {
 		return ant;
 	}
 	
-	public void findPath(int maxEpoche) throws InternalException
+	public void findPath(int maxEpoche,int maxBestRepets) throws InternalException
 	{
-		for(int i = 0; i < maxEpoche; i++)
+		int batch = 50;
+		int best  = 0;
+		int bestRepets = 0;
+		for(int i = 0; i < maxEpoche && bestRepets < maxBestRepets; i++)
 		{
 			executeOneEpoche(i+1);
-			if(i % 200 == 0)
+			if(i % batch == 0)
+			{
+				int result = getBestAnt().getDistance();
 				System.out.println(String.format("%d iter. : best distance: %d",
-						i, getBestAnt().getDistance()));
+						i, result));
+				if(result == best)
+					bestRepets += batch;
+				else
+				{
+					best = result;
+					bestRepets = 0;
+				}
+			}
 		}
 	}
 	
