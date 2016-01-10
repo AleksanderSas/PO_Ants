@@ -24,10 +24,11 @@ public class Graph {
 	private Map<String, GraphNode> nodes = new HashMap<>();
 	private List<Path> paths = new ArrayList<>();
 	private GraphNode startNode = null;
-	
-	public Graph(String fileName) throws DocumentException, GraphBuildException
+	//choosing a parser
+	public Graph(String fileName, int parser) throws DocumentException, GraphBuildException
 	{
-         parseXml(fileName);
+         if (parser == 1) parseXml(fileName);
+         else parseXml2(fileName);
          computMinDistance();
          
          //just warnings
@@ -52,6 +53,16 @@ public class Graph {
 		
 		node2.addPath(path,  node1);	
 		paths.add(path);
+		return true;
+	}
+        
+        public boolean addPath2(GraphNode node1, GraphNode node2, int distance)
+	{
+		Path path = new Path(distance,node1, node2);
+		
+		if(!node1.addPath(path, node2))
+			return false;
+
 		return true;
 	}
 	
@@ -121,7 +132,7 @@ public class Graph {
 	       		 if(node2 == null)
 	       			 throw new GraphBuildException(String.format(
 	       					 "node %s is not defined", pathNode.valueOf("@to")));
-	       		 if(!addPath(node1, node2, new Integer(pathNode.getText())))
+	       		 if(!addPath2(node1, node2, new Integer(pathNode.getText())))
 	       			 throw new GraphBuildException(String.format("redefine path: %s - %s",
 	       					 node1.getName(), node2.getName()));
 	       	 }
@@ -141,9 +152,9 @@ public class Graph {
         SAXReader reader = new SAXReader();
         Document document = reader.read( inputFile );
 
-		List<Node> xlmNodes = document.selectNodes("/graph/vertex" );
+		List<Node> xlmNodes = document.selectNodes("/travellingSalesmanProblemInstance/graph/vertex");
 		//load empty nodes
-		int licznik = 0;
+	int licznik = 0;
         for(Node xmlNode : xlmNodes)
         {
        	 String nodeName = "node_number_" + licznik;
@@ -156,7 +167,7 @@ public class Graph {
        		 startNode = newNode;
         }
         //load path
-		licznik = 0;
+	licznik = 0;
         for(Node xmlNode : xlmNodes)
         {
 	       	 String nodeName = "node_number_" + licznik;
@@ -165,18 +176,21 @@ public class Graph {
 	       	 List<Node> xlmsubNodes = xmlNode.selectNodes("./edge");
 	       	 for(Node pathNode : xlmsubNodes)
 	       	 {
+                        Float f = new Float(pathNode.valueOf("@cost"));
+                        float f1 = (float) f;
+                        int f2 = (int) f1;
 	       		 GraphNode node2 = nodes.get("node_number_" +  pathNode.getText());
 	       		 if(node2 == null)
 	       			 throw new GraphBuildException(String.format(
 	       					 "node %s is not defined", "node_number_" + pathNode.getText()));
-	       		 if(!addPath(node1, node2, new Integer(pathNode.valueOf("@cost"))))
+	       		 if(!addPath2(node1, node2, f2))
 	       			 throw new GraphBuildException(String.format("redefine path: %s - %s",
 	       					 node1.getName(), node2.getName()));
 	       	 }
         }
         
         for(GraphNode n : nodes.values())
-        	System.out.println(String.format("new node added: %s - %d connectins", 
+        	System.out.println(String.format("new node added: %s - %d connections", 
 	       			 n.getName(), n.getNodes().size()));
         System.out.println(String.format("Loaded %d nodes", nodes.size()));
         System.out.println(String.format("Loaded %d paths", paths.size()));
