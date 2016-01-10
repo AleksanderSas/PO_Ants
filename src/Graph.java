@@ -134,6 +134,54 @@ public class Graph {
         System.out.println(String.format("Loaded %d paths", paths.size()));
         System.out.println(String.format("Branching factor %f", 2.0 * paths.size() / nodes.size()));
 	}
+        
+        private void parseXml2(String fileName) throws DocumentException, GraphBuildException
+	{
+		File inputFile = new File(fileName);
+        SAXReader reader = new SAXReader();
+        Document document = reader.read( inputFile );
+
+		List<Node> xlmNodes = document.selectNodes("/graph/vertex" );
+		//load empty nodes
+		int licznik = 0;
+        for(Node xmlNode : xlmNodes)
+        {
+       	 String nodeName = "node_number_" + licznik;
+         licznik++;
+       	 if(nodes.containsKey(nodeName))
+       		 throw new GraphBuildException(String.format("Redefine node %s", nodeName));
+       	 GraphNode newNode = new GraphNode(nodeName);
+       	 nodes.put(nodeName, newNode);
+       	 if(startNode == null)
+       		 startNode = newNode;
+        }
+        //load path
+		licznik = 0;
+        for(Node xmlNode : xlmNodes)
+        {
+	       	 String nodeName = "node_number_" + licznik;
+		 licznik++;
+	       	 GraphNode node1 = nodes.get(nodeName);
+	       	 List<Node> xlmsubNodes = xmlNode.selectNodes("./edge");
+	       	 for(Node pathNode : xlmsubNodes)
+	       	 {
+	       		 GraphNode node2 = nodes.get("node_number_" +  pathNode.getText());
+	       		 if(node2 == null)
+	       			 throw new GraphBuildException(String.format(
+	       					 "node %s is not defined", "node_number_" + pathNode.getText()));
+	       		 if(!addPath(node1, node2, new Integer(pathNode.valueOf("@cost"))))
+	       			 throw new GraphBuildException(String.format("redefine path: %s - %s",
+	       					 node1.getName(), node2.getName()));
+	       	 }
+        }
+        
+        for(GraphNode n : nodes.values())
+        	System.out.println(String.format("new node added: %s - %d connectins", 
+	       			 n.getName(), n.getNodes().size()));
+        System.out.println(String.format("Loaded %d nodes", nodes.size()));
+        System.out.println(String.format("Loaded %d paths", paths.size()));
+        System.out.println(String.format("Branching factor %f", 2.0 * paths.size() / nodes.size()));
+	}
 	
 	public void saveGraph2XML(String filename) throws IOException
 	{
