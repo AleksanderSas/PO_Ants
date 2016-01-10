@@ -8,7 +8,7 @@ public class Path implements Comparable<Path>{
 	private static Random generator = new Random(System.currentTimeMillis());
 	private GraphNode node1;
 	private GraphNode node2;
-	private int distance;
+	private float distance;
 	private float pheromone;
 	private float factorizedDistance;
 	
@@ -74,7 +74,7 @@ public class Path implements Comparable<Path>{
 		return new Pair<Path, Float>(best, best.pheromone / sum / best.factorizedDistance);
 	}
 	
-	public int getDistance()
+	public float getDistance()
 	{
 		return distance;
 	}
@@ -94,6 +94,11 @@ public class Path implements Comparable<Path>{
 		pheromone = (pheromone-1) * FactorCentre.veporizationFactor + 1;
 	}
 
+	public void reset()
+	{
+		pheromone = (float) 1.0;
+	}
+	
 	@Override
 	public int compareTo(Path o) 
 	{

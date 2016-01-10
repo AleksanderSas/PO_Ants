@@ -76,19 +76,21 @@ public class Anthill {
 		return ant;
 	}
 	
-	public void findPath(int maxEpoche,int maxBestRepets) throws InternalException
+	public int findPath(int maxEpoche,int maxBestRepets, IWritter writter) throws InternalException
 	{
 		int batch = 50;
 		int best  = 0;
+		int result = Integer.MAX_VALUE;
 		int bestRepets = 0;
 		for(int i = 0; i < maxEpoche && bestRepets < maxBestRepets; i++)
 		{
 			executeOneEpoche(i+1);
 			if(i % batch == 0)
 			{
-				int result = getBestAnt().getDistance();
-				System.out.println(String.format("%d iter. : best distance: %d",
-						i, result));
+				result = getBestAnt().getDistance();
+				//System.out.println(String.format("%d iter. : best distance: %d",
+					//	i, result));
+				writter.write(result, i);
 				if(result == best)
 					bestRepets += batch;
 				else
@@ -98,6 +100,7 @@ public class Anthill {
 				}
 			}
 		}
+		return result;
 	}
 	
 	public String getBestPath() throws InternalException

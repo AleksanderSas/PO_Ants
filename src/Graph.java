@@ -238,5 +238,11 @@ public class Graph {
 	{
 		return nodes.size();
 	}
+	
+	public void reset()
+	{
+		for(Path p : paths)
+			p.reset();
+	}
 
 }
