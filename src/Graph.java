@@ -24,7 +24,7 @@ public class Graph {
 	private Map<String, GraphNode> nodes = new HashMap<>();
 	private List<Path> paths = new ArrayList<>();
 	private GraphNode startNode = null;
-	//choosing a parser
+	//choosing a parser parseXML or parseXML2
 	public Graph(String fileName, int parser) throws DocumentException, GraphBuildException
 	{
          if (parser == 1) parseXml(fileName);
@@ -44,9 +44,9 @@ public class Graph {
 		computMinDistance();
 	}
 	
-	public boolean addPath(GraphNode node1, GraphNode node2, int distance)
+	public boolean addPath(GraphNode node1, GraphNode node2, float distance)
 	{
-		Path path = new Path(distance,node1, node2);
+		Path path = new Path(distance, node1, node2);
 		
 		if(!node1.addPath(path, node2))
 			return false;
@@ -56,15 +56,7 @@ public class Graph {
 		return true;
 	}
         
-        public boolean addPath2(GraphNode node1, GraphNode node2, int distance)
-	{
-		Path path = new Path(distance,node1, node2);
-		
-		if(!node1.addPath(path, node2))
-			return false;
-
-		return true;
-	}
+     
 	
 	/*
 	 * 	The function computes minimal distance from
@@ -132,7 +124,7 @@ public class Graph {
 	       		 if(node2 == null)
 	       			 throw new GraphBuildException(String.format(
 	       					 "node %s is not defined", pathNode.valueOf("@to")));
-	       		 if(!addPath2(node1, node2, new Integer(pathNode.getText())))
+	       		 if(!addPath(node1, node2, new Integer(pathNode.getText())))
 	       			 throw new GraphBuildException(String.format("redefine path: %s - %s",
 	       					 node1.getName(), node2.getName()));
 	       	 }
@@ -177,15 +169,11 @@ public class Graph {
 	       	 for(Node pathNode : xlmsubNodes)
 	       	 {
                         Float f = new Float(pathNode.valueOf("@cost"));
-                        float f1 = (float) f;
-                        int f2 = (int) f1;
 	       		 GraphNode node2 = nodes.get("node_number_" +  pathNode.getText());
 	       		 if(node2 == null)
 	       			 throw new GraphBuildException(String.format(
 	       					 "node %s is not defined", "node_number_" + pathNode.getText()));
-	       		 if(!addPath2(node1, node2, f2))
-	       			 throw new GraphBuildException(String.format("redefine path: %s - %s",
-	       					 node1.getName(), node2.getName()));
+	       		 addPath(node1, node2, f);
 	       	 }
         }
         

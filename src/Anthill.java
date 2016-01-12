@@ -17,7 +17,7 @@ public class Anthill {
 	public Anthill(int antNumber, Graph graph)
 	{
 		node2VisitNumber = graph.getNodeNumber() / 2;
-		this.graph = graph;;
+		this.graph = graph;
 		for(int i = 0; i < antNumber; i++)
 			ants.add(new Ant(graph.getStartNode()));
 		
