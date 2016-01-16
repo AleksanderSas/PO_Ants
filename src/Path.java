@@ -12,7 +12,7 @@ public class Path implements Comparable<Path>{
 	private float pheromone;
 	private float factorizedDistance;
 	
-	public Path(int distance, GraphNode node1,GraphNode node2) 
+	public Path(float distance, GraphNode node1,GraphNode node2) 
 	{
 		super();
 		this.node1 = node1;
