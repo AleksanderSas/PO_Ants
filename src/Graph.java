@@ -174,6 +174,7 @@ public class Graph {
 	       			 throw new GraphBuildException(String.format(
 	       					 "node %s is not defined", "node_number_" + pathNode.getText()));
 	       		 addPath(node1, node2, f);
+				 
 	       	 }
         }
         
