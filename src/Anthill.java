@@ -8,11 +8,12 @@ import javafx.util.Pair;
 
 public class Anthill {
 	
-	//Ant[] ants;
 	List<Ant> ants = new ArrayList<>();
 	Graph graph;
 	int node2VisitNumber;
 	float pheromoneSpreadFactor;
+	Thread[] threads = new Thread[FactorCentre.threadNo];
+	Anthill_subrun[] subruns = new Anthill_subrun[FactorCentre.threadNo];
 	
 	public Anthill(int antNumber, Graph graph)
 	{
@@ -22,12 +23,20 @@ public class Anthill {
 			ants.add(new Ant(graph.getStartNode()));
 		
 		pheromoneSpreadFactor = computPheromoneSpreadFactor();
+		int antsPerThread = antNumber / FactorCentre.threadNo;
+		int firstAnt = 0;
+		for(int i = 0; i < FactorCentre.threadNo-1; i++)
+		{
+			subruns[i] = new Anthill_subrun(ants.subList(firstAnt, firstAnt + antsPerThread), node2VisitNumber, 1);
+			firstAnt += antsPerThread;
+		}
+		subruns[FactorCentre.threadNo-1] = new Anthill_subrun(ants.subList(firstAnt, ants.size()), node2VisitNumber, 1);
 		//pheromoneSpreadFactor = (float) 1.0;
 	}
 	
 	private void executeOneEpoche(int epoche)
 	{
-		for(Ant a: ants)
+		/*for(Ant a: ants)
 		{
 			a.reset();
 			try 
@@ -37,6 +46,23 @@ public class Anthill {
 			} catch (InternalException e) 
 			{
 				System.out.println(e.getMessage());
+			}
+		}*/
+		for(int i = 0 ; i < threads.length; i++)
+		{
+			threads[i] = new Thread(subruns[i]);
+			threads[i].start();
+		}
+		for(int i = 0 ; i < threads.length; i++)
+		{
+			try 
+			{
+				threads[i].join();
+				subruns[i].nextEpoche();
+				
+			} catch (InterruptedException e) 
+			{
+				e.printStackTrace();
 			}
 		}
 		for(Path p : graph.getPaths())

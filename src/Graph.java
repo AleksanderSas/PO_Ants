@@ -124,7 +124,7 @@ public class Graph {
 	       		 if(node2 == null)
 	       			 throw new GraphBuildException(String.format(
 	       					 "node %s is not defined", pathNode.valueOf("@to")));
-	       		 if(!addPath(node1, node2, new Integer(pathNode.getText())))
+	       		 if(!addPath(node1, node2, new Float(pathNode.getText())))
 	       			 throw new GraphBuildException(String.format("redefine path: %s - %s",
 	       					 node1.getName(), node2.getName()));
 	       	 }
@@ -138,7 +138,7 @@ public class Graph {
         System.out.println(String.format("Branching factor %f", 2.0 * paths.size() / nodes.size()));
 	}
         
-        private void parseXml2(String fileName) throws DocumentException, GraphBuildException
+    private void parseXml2(String fileName) throws DocumentException, GraphBuildException
 	{
 		File inputFile = new File(fileName);
         SAXReader reader = new SAXReader();
@@ -163,7 +163,7 @@ public class Graph {
         for(Node xmlNode : xlmNodes)
         {
 	       	 String nodeName = "node_number_" + licznik;
-		 licznik++;
+	       	 licznik++;
 	       	 GraphNode node1 = nodes.get(nodeName);
 	       	 List<Node> xlmsubNodes = xmlNode.selectNodes("./edge");
 	       	 for(Node pathNode : xlmsubNodes)

@@ -3,16 +3,17 @@ public class FactorCentre {
 	//public static final float pheromoneFactor = 	(float) 0.5;
 	public static final float veporizationFactor = 	(float) 0.978;
 	public static final float epocheFactor = 		(float) 0.0;
-	public static final float pheromoneExpFactor = 	(float) 2.7;
+	public static  float pheromoneExpFactor = 	(float) 2.7;
 	public static final float DistanceExpFactor = 	(float) 0.2;
 	public static final float PheromoneSpreadFactor = (float) 5.5;
-	public static final int   AntPrunningFactor = 	25;
+	public static  int   AntPrunningFactor = 	25;
 	
 	public static final int epocheNumber = 			4000;
-	public static final int antNumber = 			1000;	
+	public static  int antNumber = 			1000;	
 	
 	public static final int graphSize = 			50;
 	public static final int maxBestRepets = 		700;
+	public static final int threadNo = 				4;
 	
 	/*
 	public static final float veporizationFactor = 	(float) 0.978;
